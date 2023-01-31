@@ -205,9 +205,10 @@ func (p *Parser) Feed(b byte) ([]byte, error) {
 
 	if len(p.stack) == 0 {
 		// last state was popped, we got a successful parse.
-		data := p.data
+		d := make([]byte, len(p.data))
+		copy(d, p.data)
 		p.data = p.data[:0]
-		return data, nil
+		return d, nil
 	}
 
 	return nil, nil

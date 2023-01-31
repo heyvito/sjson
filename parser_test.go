@@ -151,3 +151,25 @@ func TestSuite(t *testing.T) {
 		})
 	}
 }
+
+func TestConsecutive(t *testing.T) {
+	a := []byte(`[null,1,"1",{},false]`)
+	b := []byte(`{"test":true}`)
+
+	p := Parser{}
+	var resultA []byte
+	var resultB []byte
+	var err error
+	for _, v := range a {
+		resultA, err = p.Feed(v)
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, a, resultA)
+
+	for _, v := range b {
+		resultB, err = p.Feed(v)
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, b, resultB)
+	assert.Equal(t, a, resultA)
+}
